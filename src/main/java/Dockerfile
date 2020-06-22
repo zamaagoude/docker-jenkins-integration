@@ -1,13 +1,19 @@
-FROM windowsservercore
+FROM alpine:latest
+RUN apk add --no-cache nodejs npm
 
-ENV NPM_CONFIG_LOGLEVEL info
-ENV IOJS_VERSION 3.2.0
 
-RUN powershell -Command "wget -Uri https://iojs.org/dist/v%IOJS_VERSION%/iojs-v%IOJS_VERSION%-x64.msi -OutFile iojs.msi -UseBasicParsing"
+WORKDIR /app
 
-RUN msiexec.exe /q /i iojs.msi
 
-CMD [ "iojs" ]
+COPY . /app
 
-# tell docker what port to expose
-#EXPOSE 8000
+
+RUN npm install
+
+
+EXPOSE 9005
+
+
+ENTRYPOINT ["node"]
+
+CMD ["server.js"]
