@@ -1,13 +1,13 @@
-# use a node base image
-FROM node:7-onbuild
+FROM windowsservercore
 
-# set maintainer
-#LABEL maintainer "s.hemmati99@gmail.com"
+ENV NPM_CONFIG_LOGLEVEL info
+ENV IOJS_VERSION 3.2.0
 
-# set a health check
-HEALTHCHECK --interval=5s \
-            --timeout=5s \
-            CMD curl -f http://127.0.0.1:8000 || exit 1
+RUN powershell -Command "wget -Uri https://iojs.org/dist/v%IOJS_VERSION%/iojs-v%IOJS_VERSION%-x64.msi -OutFile iojs.msi -UseBasicParsing"
+
+RUN msiexec.exe /q /i iojs.msi
+
+CMD [ "iojs" ]
 
 # tell docker what port to expose
-EXPOSE 8000
+#EXPOSE 8000
