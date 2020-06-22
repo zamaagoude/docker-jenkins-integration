@@ -5,7 +5,7 @@ RUN apk add --no-cache nodejs npm
 WORKDIR /app
 
 
-COPY ../../test/java /app
+COPY . /app
 
 
 RUN npm install
