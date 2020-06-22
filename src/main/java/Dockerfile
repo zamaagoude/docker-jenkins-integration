@@ -5,7 +5,8 @@ RUN apk add --no-cache nodejs npm
 WORKDIR /app
 
 
-COPY . /app
+COPY package.json /home/package.json
+COPY main.js /home/main.js
 
 
 RUN npm install
